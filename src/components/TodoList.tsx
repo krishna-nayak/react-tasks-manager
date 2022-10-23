@@ -19,10 +19,18 @@ export const TodoList: React.FC<Props> = ({ tasks, setTasks }) => {
     setTasks([...unDoneTask, { id: id, todo: doneTasks[0].todo, isDone: true }]);
   };
 
+  const handleEditText = (id: number, text: string) => {
+    const editTask = tasks.map((task) => {
+      if (task.id === id) return { id: id, todo: text, isDone: false };
+      return task;
+    });
+    setTasks(editTask);
+  };
+
   return (
     <div>
       {tasks?.map((task) => (
-        <SignleTodoList task={task} handleDelete={handleDelete} handleDone={handleDone} />
+        <SignleTodoList handleEditText={handleEditText} key={task.id} task={task} handleDelete={handleDelete} handleDone={handleDone} />
       ))}
     </div>
   );
